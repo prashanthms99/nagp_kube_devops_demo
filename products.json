@@ -1,0 +1,5 @@
+[
+  {"model": "nagp_kube_devops_demo.product", "fields": {"name": "Rocket Kit", "description": "Toy rocket", "price": "199.99"}},
+  {"model": "nagp_kube_devops_demo.product", "fields": {"name": "Telescope", "description": "For stargazing", "price": "299.99"}},
+  {"model": "nagp_kube_devops_demo.product", "fields": {"name": "Space Puzzle", "description": "Puzzle game", "price": "89.99"}}
+]

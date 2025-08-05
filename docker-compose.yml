@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    env_file:
+      - ./.env
+    environment:
+      MYSQL_DATABASE: ${SQL_DATABASE}
+      MYSQL_USER: ${SQL_USER}
+      MYSQL_PASSWORD: ${SQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app_network
+
+  web:
+    image: bootloader720/nagp-py-app:latest  # or use build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+    environment:
+      DB_HOST: mysql_db
+      DB_PORT: 3306
+      MYSQL_DATABASE: ${SQL_DATABASE}
+      MYSQL_USER: ${SQL_USER}
+      MYSQL_PASSWORD: ${SQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
+    networks:
+      - app_network
+
+volumes:
+  db_data:
+  static_data:
+
+networks:
+  app_network:
