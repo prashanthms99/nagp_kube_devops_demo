@@ -3,7 +3,7 @@ version: "3.9"
 services:
   db:
     image: mysql:8.0
-    container_name: mysql_db
+    container_name: mysql
     restart: always
     env_file:
       - ./.env
@@ -28,7 +28,7 @@ services:
     env_file:
       - ./.env
     environment:
-      DB_HOST: mysql_db
+      DB_HOST: ${SQL_HOST}
       DB_PORT: 3306
       MYSQL_DATABASE: ${SQL_DATABASE}
       MYSQL_USER: ${SQL_USER}
