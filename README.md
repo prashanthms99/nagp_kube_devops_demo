@@ -1,6 +1,6 @@
 # NAGP Kube DevOps Demo – Django + MySQL
 
-A complete web application using Django + MySQL, containerized with Docker, orchestrated with Docker Compose, and production-ready for Kubernetes (local or GCP).
+A Service API is exposed using Django + MySQL, containerized with Docker, orchestrated with Docker Compose, and production-ready for Kubernetes (local or GCP).
 
 ---
 
