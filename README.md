@@ -3,8 +3,54 @@
 A Service API is exposed using Django + MySQL, containerized with Docker, orchestrated with Docker Compose, and production-ready for Kubernetes (local or GCP).
 
 ---
+## Requirement Understanding
+The application consists of two tiers:
 
-Run Locally with Docker Compose
+### Service API Tier: 
+- Built using Python and Django, requires external exposure, runs multiple pods, and supports rolling updates.
+
+### Database Tier: 
+- Uses MySQL, needs persistent storage, does not support rolling updates, and should be securely configured.
+
+----
+## Solution Overview
+- Service API Tier is deployed using a Deployment with 4 replicas.
+
+- It is exposed externally via Ingress, with a Service (ClusterIP) handling internal routing.
+
+- MySQL is deployed using a StatefulSet with a PersistentVolumeClaim for durable storage.
+
+- ConfigMap stores database configuration (e.g., DB_HOST, DB_USER).
+
+- Secret securely stores the DB password.
+
+- Pod-to-pod communication is handled using Kubernetes Services, not raw IPs.
+
+----
+## Assumptions
+- The Django app uses environment variables for DB config (e.g., host, user, password).
+
+- Kubernetes cluster supports Ingress (e.g., NGINX Ingress Controller).
+
+- PersistentVolume and PersistentVolumeClaim are available for MySQL storage.
+
+- Secrets and ConfigMaps are supported and accessible by the pods.
+
+----
+## Justification for the Resources Utilized
+- Deployment for API Tier: Supports rolling updates and scaling.
+
+- StatefulSet for MySQL: Ensures stable identity and persistent volume usage.
+
+- ConfigMap: Allows environment-specific DB settings without changing code.
+
+- Secret: Enhances security by avoiding plain-text credentials.
+
+- Ingress: Provides a clean and manageable external entry point.
+
+----
+
+## Steps followed Locally with Docker Compose
 
 ## Create a `.env` file in the root:
 
