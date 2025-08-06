@@ -63,7 +63,7 @@ Run Locally with Docker Compose
 
 ## Image Build & Push for GCP:
 
-`docker build -t gcr.io/<gcp-project-id>/nagp-py-app:latest  .`
+`docker build -t gcr.io/<gcp-project-id>/nagp-py-app:latest .`
 
 `docker push gcr.io/<gcp-project-id>/nagp-py-app:latest`
 
@@ -81,22 +81,22 @@ Create a Persistent Disk that can later be used in GKE
    `kubectl apply -f k8s/mysql-configmap.yaml` 
 
 2. Apply Persistent Voulme  and PVC 
+   `kubectl apply -f mysql-pv.yaml`
+   `kubectl apply -f mysql-pvc.yaml`
 
-2. Deploy MySQL:
+3. Deploy MySQL:
+	`kubectl apply -f k8s/mysql-deployment.yaml`
+	`kubectl apply -f k8s/mysql-service.yaml`   
 
-`kubectl apply -f k8s/mysql-deployment.yaml`
+4. Update `web-deployment.yaml` image field to your pushed image:
 
-`kubectl apply -f k8s/mysql-service.yaml`   
+   image: `gcr.io/YOUR_PROJECT_ID/nagp-py-app:latest`
 
-3. Update `web-deployment.yaml` image field to your pushed image:
-
-   image: gcr.io/YOUR_PROJECT_ID/nagp-py-app:latest
-
-Then deploy Django app:
+   Then deploy Django app:
 
 `kubectl apply -f k8s/django-deployment.yaml`  
 
- 4. Deploy Ingress:
+5. Deploy Ingress:
 
 `kubectl apply -f k8s/ingress.yaml`  
 
@@ -116,7 +116,10 @@ To load data automatically:
 
 Or manually:
 
-kubectl exec -it <mysql-pod> -- bash  
+kubectl cp Dump20250805.sql mysql-d8468b4df-mzsj4:/tmp/dump.sql
+
+kubectl exec -it mysql-<pod-id> -- bash
+
 mysql -u nagp_admin -p nagpdb < /tmp/dump.sql
 
 ---
