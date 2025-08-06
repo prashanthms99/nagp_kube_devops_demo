@@ -104,7 +104,7 @@ To test locally, update `/etc/hosts`:
 
 `<ingress-external-ip> nagp.local`  
 
-Then visit: http://nagp.local
+Then visit: http://nagp.local:8000/api/products/
 
 
 ---
