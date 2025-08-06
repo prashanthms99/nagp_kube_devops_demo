@@ -1,6 +1,6 @@
 # NAGP Kube DevOps Demo – Django + MySQL
 
-A Service API is exposed using Django + MySQL, containerized with Docker, orchestrated with Docker Compose, and production-ready for Kubernetes (local or GCP).
+A complete web application using Django + MySQL, containerized with Docker, orchestrated with Docker Compose, and production-ready for Kubernetes (local or GCP).
 
 ---
 
@@ -67,6 +67,10 @@ Run Locally with Docker Compose
 
 `docker push gcr.io/<gcp-project-id>/nagp-py-app:latest`
 
+## Create a Persistent Disk 
+Create a Persistent Disk that can later be used in GKE 
+
+`gcloud compute disks create gke-mysql-disk --size=1GB --zone=us-central1-a`
 
 ## Deploy to Kubernetes (GCP)
 
@@ -74,7 +78,9 @@ Run Locally with Docker Compose
 
    `kubectl apply -f k8s/mysql-secret.yaml ` 
 
-   `kubectl apply -f k8s/mysql-configmap.yaml`  
+   `kubectl apply -f k8s/mysql-configmap.yaml` 
+
+2. Apply Persistent Voulme  and PVC 
 
 2. Deploy MySQL:
 
